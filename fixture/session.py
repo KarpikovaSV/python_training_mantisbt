@@ -1,3 +1,4 @@
+import time
 
 
 class SessionHelper:
@@ -8,6 +9,7 @@ class SessionHelper:
         # login
         wd = self.app.wd
         self.app.open_home_page()
+        time.sleep(1)
         wd.find_element_by_name("username").clear()
         wd.find_element_by_name("username").send_keys(username)
         wd.find_element_by_name("username").click()
@@ -15,8 +17,6 @@ class SessionHelper:
         wd.find_element_by_name("password").clear()
         wd.find_element_by_name("password").send_keys(password)
         wd.find_element_by_xpath(u"//input[@value='Вход']").click()
-        #wd.find_element_by_id("LoginForm").click()
-        #wd.find_element_by_css_selector('input[type="submit"]')
 
     def ensure_login(self, username, password):
         wd = self.app.wd
