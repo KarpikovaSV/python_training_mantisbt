@@ -17,7 +17,7 @@ class ProjectHelper:
         wd.find_element_by_xpath("//button[@type='submit']").click()
         self.fill_name_project(project)
         wd.find_element_by_xpath(u"//input[@value='Добавить проект']").click()
-        self.contact_cache = None
+        self.project_cache = None
 
     def random(self, prefix, maxlen):
         symbols = string.ascii_letters + string.digits
@@ -39,7 +39,7 @@ class ProjectHelper:
         wd.find_element_by_xpath(u"//input[@value='Удалить проект']").click()
         time.sleep(3)
         wd.find_element_by_xpath(u"//input[@value='Удалить проект']").click()
-        self.contact_cache = None
+        self.project_cache = None
 
     def count_project(self):
         wd = self.app.wd
@@ -52,6 +52,8 @@ class ProjectHelper:
         wd = self.app.wd
         self.change_field_project("project-name", project.name)
 
+    project_cache = None
+
     def change_field_project(self, field_name, text):
         wd = self.app.wd
         if text is not None:
@@ -60,16 +62,16 @@ class ProjectHelper:
             wd.find_element_by_id(field_name).send_keys(text)
 
     def get_project_list(self):
-        if self.contact_cache is None:
+        if self.project_cache is None:
             wd = self.app.wd
             self.app.open_home_page()
-            self.contact_cache = []
+            self.project_cache = []
             table = wd.find_element_by_css_selector("table.table-striped.table-bordered.table-condensed.table-hover")
             tbody = table.find_element(By.TAG_NAME, "tbody")
             for element in tbody.find_elements(By.TAG_NAME, "a"):
                 name = element.text
-                self.contact_cache.append(Project(name=name))
-        return list(self.contact_cache)
+                self.project_cache.append(Project(name=name))
+        return list(self.project_cache)
 
     def select_xpa(self, field_name, text):
         wd = self.app.wd
