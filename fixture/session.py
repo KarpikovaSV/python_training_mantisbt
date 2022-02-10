@@ -2,6 +2,7 @@ import time
 
 
 class SessionHelper:
+
     def __init__(self, app):
         self.app = app
 
@@ -37,8 +38,8 @@ class SessionHelper:
 
     def logout(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("Logout").click()
-        wd.find_element_by_name("user")
+        wd.find_element_by_css_selector("span.user-info").click()
+        self.app.lgout_page()
 
     def ensure_logout(self):
         wd = self.app.wd

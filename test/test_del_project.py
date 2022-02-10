@@ -3,14 +3,16 @@ import random
 
 
 def test_del_project(app):
+    username = app.config['webadmin']['username']
+    password = app.config['webadmin']['password']
     if app.project.count_project() == 0:
         name = app.project.random("name", 10)
         project = Project(name=name)
         app.project.create_project(project)
-    old_projects = app.project.get_project_list()
+    old_projects = app.soap.projects_get(username, password)
     project = random.choice(old_projects)
     app.project.delete_project_by_name(project.name)
-    new_projects = app.project.get_project_list()
+    new_projects = app.soap.projects_get(username, password)
     assert len(old_projects) - 1 == app.project.count_project()
     old_projects.remove(project)
     assert old_projects == new_projects
